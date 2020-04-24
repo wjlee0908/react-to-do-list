@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './todos.scss';
 
-const TodoItem = ({ todo }) => {
+const TodoItem = (props) => {
   return (
-    <li key={todo.key} className={todo.isDone ? "completed" : ""} >
-    <span><i className="fa fa-trash"></i></span> {todo.text}
+    <li className={props.todo.isCompleted ? "completed" : ""} onClick={() => props.toggleCompleteTodo(props.index)} >
+    <span><i className="fa fa-trash"></i></span> {props.todo.text}
     </li>
   );
 }
@@ -33,16 +33,22 @@ function TodoInput({ addTodo }) {
 
 function App() {
   const [todos, setTodos] = useState(
-    [ {text: "First item", isDone: false}, 
-      {text: "Second item", isDone: false}, 
-      {text: "Third item", isDone: false} ]
+    [ {text: "First item", isCompleted: false}, 
+      {text: "Second item", isCompleted: false}, 
+      {text: "Third item", isCompleted: false} ]
     );
   const [newTodoValue, setNewTodoValue] = useState("");
 
   const addTodo = (todo) => {
-    const newTodos = [...todos, {text: todo, isDone: false}];
+    const newTodos = [...todos, {text: todo, isCompleted: false}];
     setTodos(newTodos);
   };
+
+  const toggleCompleteTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].isCompleted = !(newTodos[index].isCompleted);
+    setTodos(newTodos);
+  }
 
   return (
     <div className="main">
@@ -52,8 +58,10 @@ function App() {
           <ul>
               {todos.map((todo, index) => (
                 <TodoItem 
-                  key={index}
+                  key = {index}
+                  index = {index}
                   todo={todo}
+                  toggleCompleteTodo = {toggleCompleteTodo}
                 />
               ))}
           </ul>
