@@ -1,0 +1,22 @@
+{
+  "name": "react-to-do-list",
+  "version": "0.0.1",
+  "description": "To do list project implemented in react",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wjlee0908/react-to-do-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wjlee0908/react-to-do-list/issues"
+  },
+  "homepage": "https://github.com/wjlee0908/react-to-do-list#readme",
+  "dependencies": {
+    "yarn": "^1.22.4"
+  }
+}

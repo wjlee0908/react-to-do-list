@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './todos.scss';
 
+
 const TodoItem = (props) => {
+  const handleRemoveEvent = (event, index) => {
+    props.removeTodo(index)
+    event.stopPropagation();
+  }  
+
   return (
-    <li className={props.todo.isCompleted ? "completed" : ""} onClick={() => props.toggleCompleteTodo(props.index)} >
-    <span><i className="fa fa-trash"></i></span> {props.todo.text}
+    <li key={props.key} className={props.todo.isCompleted ? "completed" : ""} onClick={() => props.toggleCompleteTodo(props.index)}>
+    <span onClick={(event) => handleRemoveEvent(event, props.index)}><i className="fa fa-trash"></i></span> {props.todo.text}
     </li>
   );
 }
@@ -37,7 +43,6 @@ function App() {
       {text: "Second item", isCompleted: false}, 
       {text: "Third item", isCompleted: false} ]
     );
-  const [newTodoValue, setNewTodoValue] = useState("");
 
   const addTodo = (todo) => {
     const newTodos = [...todos, {text: todo, isCompleted: false}];
@@ -47,6 +52,13 @@ function App() {
   const toggleCompleteTodo = (index) => {
     const newTodos = [...todos];
     newTodos[index].isCompleted = !(newTodos[index].isCompleted);
+    setTodos(newTodos);
+  };
+
+  const removeTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    console.log(newTodos);
     setTodos(newTodos);
   }
 
@@ -58,10 +70,11 @@ function App() {
           <ul>
               {todos.map((todo, index) => (
                 <TodoItem 
-                  key = {index}
-                  index = {index}
+                  key={index}
+                  index={index}
                   todo={todo}
                   toggleCompleteTodo = {toggleCompleteTodo}
+                  removeTodo = {removeTodo}
                 />
               ))}
           </ul>
